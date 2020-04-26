@@ -23,7 +23,8 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         destreza: req.body.destreza,
         fuerza: req.body.fuerza,
-        agilidad: req.body.agilidad
+        agilidad: req.body.agilidad,
+        vitalidad: req.body.vitalidad
     })
 
     try {
@@ -50,6 +51,10 @@ router.patch('/:id', getPersonaje, async (req, res) => {
 
     if(req.body.agilidad != null){
         res.personaje.agilidad = req.body.agilidad
+    }
+
+    if(req.body.agilidad != null){
+        res.personaje.vitalidad = req.body.vitalidad
     }
 
     try {

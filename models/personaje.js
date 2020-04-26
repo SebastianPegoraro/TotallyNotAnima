@@ -18,6 +18,10 @@ const personajeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    vitalidad: {
+        type: Number,
+        required: true
+    },
     creationDate: {
         type: Date,
         required: true,
