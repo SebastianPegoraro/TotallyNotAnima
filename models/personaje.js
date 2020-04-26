@@ -6,22 +6,28 @@ const personajeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    destreza: {
-        type: Number,
-        required: true
-    },
-    fuerza: {
-        type: Number,
-        required: true
-    },
-    agilidad: {
-        type: Number,
-        required: true
-    },
-    creationDate: {
-        type: Date,
-        required: true,
-        default: Date.now
+    stats: {
+        destreza: {
+            type: Number,
+            required: true
+        },
+        fuerza: {
+            type: Number,
+            required: true
+        },
+        agilidad: {
+            type: Number,
+            required: true
+        },
+        vitalidad: {
+            type: Number,
+            required: true
+        },
+        creationDate: {
+            type: Date,
+            required: true,
+            default: Date.now
+        }
     }
 })
 
