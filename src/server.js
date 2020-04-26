@@ -15,6 +15,11 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('connected to database'));
 
-var server = app.listen(5000, function () {
-    console.log('Server running in port 5000');
+app.use(express.json());
+
+const personajesRouter = require('../routes/personajes');
+app.use('/personajes', personajesRouter);
+
+var server = app.listen(3000, function () {
+    console.log('Server running in port 3000');
 });
