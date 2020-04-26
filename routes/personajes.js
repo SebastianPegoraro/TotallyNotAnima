@@ -21,10 +21,12 @@ router.get('/:id', getPersonaje, (req, res) => {
 router.post('/', async (req, res) => {
     const personaje = new Personaje({
         name: req.body.name,
-        destreza: req.body.destreza,
-        fuerza: req.body.fuerza,
-        agilidad: req.body.agilidad,
-        vitalidad: req.body.vitalidad
+        stats: {
+            destreza: req.body.stats.destreza,
+            fuerza: req.body.stats.fuerza,
+            agilidad: req.body.stats.agilidad,
+            vitalidad: req.body.stats.vitalidad
+        }
     })
 
     try {
