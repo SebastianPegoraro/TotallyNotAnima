@@ -1,76 +1,84 @@
 const express = require('express')
 const router = express.Router()
-const Personaje = require('../models/personaje')
+const Player = require('../models/player')
 
 // Get all pjs
 router.get('/', async (req, res) => {
     try {
-        const personajes = await Personaje.find()
-        res.json(personajes)
+        const player = await Player.find()
+        res.json(player)
     } catch (e) {
         res.status(500).json({ message: e.message })
     }
 })
 
 // Get one pj
-router.get('/:id', getPersonaje, (req, res) => {
+router.get('/:id', getPlayer, (req, res) => {
     res.json(res.personaje)
 })
 
 // Create one pj
 router.post('/', async (req, res) => {
-    const personaje = new Personaje({
+    const player = new Player({
+
         name: req.body.name,
         stats: {
-            destreza: req.body.stats.destreza,
-            fuerza: req.body.stats.fuerza,
-            agilidad: req.body.stats.agilidad,
-            vitalidad: req.body.stats.vitalidad
+            dexterity: req.body.stats.dexterity,
+            strength: req.body.stats.strength,
+            agility: req.body.stats.agility,
+            vitality: req.body.stats.vitality
+        },
+        fight: {
+            turn: req.body.fight.turn,
+            actions: req.body.fight.actions,
+            attack: req.body.fight.attack,
+            defense: req.body.fight.defense,
+            damage: req.body.fight.damage
         }
     })
 
     try {
-        const newPersonaje = await personaje.save()
-        res.status(201).json(newPersonaje)
+        const newPlayer = await player.save()
+        res.status(201).json(newPlayer)
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
 })
 
 // Update one pj
-router.patch('/:id', getPersonaje, async (req, res) => {
+router.patch('/:id', getPlayer, async (req, res) => {
     if(req.body.name != null){
-        res.personaje.name = req.body.name
+        res.player.name = req.body.name
     }
 
     if(req.body.destreza != null){
-        res.personaje.destreza = req.body.destreza
+        res.player.destreza = req.body.destreza
     }
 
     if(req.body.fuerza != null){
-        res.personaje.fuerza = req.body.fuerza
+        res.player.fuerza = req.body.fuerza
     }
 
     if(req.body.agilidad != null){
-        res.personaje.agilidad = req.body.agilidad
+        res.player.agilidad = req.body.agilidad
     }
 
     if(req.body.agilidad != null){
-        res.personaje.vitalidad = req.body.vitalidad
+        res.player.vitalidad = req.body.vitalidad
     }
 
     try {
-        const updatePersonaje = await res.personaje.save()
-        res.json(updatePersonaje)        
+        const updatePlayer = await res.player.save()
+        res.json(updatePlayer)        
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
 })
 
 // Delete one pj
-router.delete('/:id', getPersonaje, async (req, res) => {
+router.delete('/:id', getPlayer, async (req, res) => {
     try {
-        await res.personaje.remove()
+        await res.player.remove()
         res.json({ message: 'Se borró el personaje!' })        
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -79,16 +87,16 @@ router.delete('/:id', getPersonaje, async (req, res) => {
 
 module.exports = router
 
-async function getPersonaje(req, res, next) {
+async function getPlayer(req, res, next) {
     try {
-        personaje = await Personaje.findById(req.params.id)
-        if(personaje == null){
+        player = await Player.findById(req.params.id)
+        if(player == null){
             return res.status(404).json({ message: 'No existe el personaje' })
         }
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
 
-    res.personaje = personaje
+    res.player = player
     next()
 }
